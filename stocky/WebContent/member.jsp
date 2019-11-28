@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page session="false" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="servlets.DBConnection" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +14,18 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Welcome!</title>
 </head>
 
 <body>
+	<div class="jumbotron text-center" style="margin-bottom:0" id="jumbotron-top">
+  		<h1 class="text-light">Welcome to Stocky,</h1>
+ 		<p class="text-light">A place to start your stock exchange.</p> 
+	</div>
+
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
   		<a class="navbar-brand" href="index.jsp">Stocky</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,11 +35,11 @@
   		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="member.jsp">Member Home<span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Buy and Sell Stocks</a>
+					<a class="nav-link" href="#">Trade Stocks</a>
 				</li>
 
 				<li class="nav-item">
@@ -48,10 +59,67 @@
 		</div>
 	</nav>
 
-	<h2>Welcome, <%= request.getAttribute("firstName") %></h2>
+	<div class="container">
+		<%
+			Cookie ck[] = request.getCookies();
+			if (ck != null) {
+				
+				try {
+				for (int i = 0; i < ck.length; i++) {
+					Cookie cookie = ck[i];
+					System.out.print("CookieName : " + cookie.getName() + ",  ");
+					System.out.println("Value: " + cookie.getValue());
+					String email = cookie.getValue();
+					
+					Connection con = servlets.DBConnection.initializeDatabase();
+					Statement stmt = con.createStatement();
+					String sql = "SELECT First_Name, Last_Name FROM USERS WHERE Email_Address = \'" + email + "\'";
+					ResultSet rs = stmt.executeQuery(sql);
+					rs.next();
+					String firstName = rs.getString("First_Name");
+					String LastName = rs.getString("Last_Name");
+						
+					
+					
+					out.println("<h2 class='col-sm-6' style='margin-top:0px;'> Welcome, " + firstName + " " + LastName + "</h2>");
+				}
+				}catch (ClassNotFoundException e) {
+					
+					e.printStackTrace();
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("Not authenticated on member.jsp!");
+				//request.getRequestDispatcher("index.jsp").include(request, response);
+				response.sendRedirect("index.jsp");
+			}
+		%>
+
+		<form action="Logout" method="GET">
+			<div class="form-group" id="logout-button">
+				<button type="submit" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-log-out"></span> Log out
+				</button>
+			</div>
+			<!-- form-group// -->
+
+		</form>
+
+
+
+	</div>
+
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
-		<p>Footer</p>
+		<p>© Copyright 2019 Stocky • All rights reserved.</p>
+		<div>
+			<a href="#" class="fab fa-facebook"></a> <a href="#"
+				class="fab fa-twitter"></a> <a href="#" class="fab fa-google"></a> <a
+				href="#" class="fab fa-linkedin"></a> <a href="#"
+				class="fab fa-youtube"></a> <a href="#" class="fab fa-instagram"></a>
+		</div>
 	</div>
 	
 
@@ -61,5 +129,6 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/2b9f2b0ca1.js" crossorigin="anonymous"></script>
 </body>
 </html>

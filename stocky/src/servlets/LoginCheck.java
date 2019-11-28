@@ -1,3 +1,4 @@
+package servlets;
 
 
 import java.io.IOException;
@@ -5,6 +6,7 @@ import java.sql.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,10 +50,10 @@ public class LoginCheck extends HttpServlet {
 			String sql = "SELECT Email_Address, Password FROM USERS WHERE Email_Address = \'" + userEmail + "\'";
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			
+			String dbEmailAddress = "";
 			while(rs.next()){
 	            //Retrieve by column name
-	            String dbEmailAddress = rs.getString("Email_Address");
+	            dbEmailAddress = rs.getString("Email_Address");
 	            String dbPassword = rs.getString("Password");
 	            
 	            if(userPassword.equals(dbPassword)) {
@@ -61,15 +63,19 @@ public class LoginCheck extends HttpServlet {
 	         }
 			
 			if(isAuthenticated) {
-				String retriveNameSql = "SELECT First_Name FROM USERS WHERE Email_Address = \'" + userEmail + "\'";
-				ResultSet rs1 = stmt.executeQuery(retriveNameSql);
+				//String retriveNameSql = "SELECT First_Name FROM USERS WHERE Email_Address = \'" + userEmail + "\'";
+				//ResultSet rs1 = stmt.executeQuery(retriveNameSql);
 				
-				rs1.next();
-				String userFirstName = rs1.getString("First_Name");
+				//rs1.next();
+				//String userFirstName = rs1.getString("First_Name");
 				
+				Cookie ck = new Cookie("email", dbEmailAddress);  
+				ck.setMaxAge(60 * 60); 
+	            response.addCookie(ck);  
 				//response.sendRedirect("member.jsp");
-				request.setAttribute("firstName", userFirstName);
-				request.getRequestDispatcher("member.jsp").forward(request, response);
+				request.setAttribute("email", dbEmailAddress);
+				//request.getRequestDispatcher("member.jsp").forward(request, response);
+				response.sendRedirect("member.jsp");
 			}else {
 				response.sendRedirect("error.jsp");
 			}
