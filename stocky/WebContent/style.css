@@ -24,4 +24,9 @@
 
 #logout-button {
 	float: right;
+	margin-top: 10px;
+}
+
+#addBankAccount-button {
+	padding: 15px;
 }

@@ -56,6 +56,11 @@
 
 			</ul>
 
+			<form class="" action="Logout" method="GET">
+				<button type="submit" class="btn btn-default btn-sm" id="logout-button">
+					<span class="glyphicon glyphicon-log-out"></span> Log out
+				</button>
+			</form>
 		</div>
 	</nav>
 
@@ -79,9 +84,12 @@
 					String firstName = rs.getString("First_Name");
 					String LastName = rs.getString("Last_Name");
 						
+					out.println("<h2 class='col-sm-12' style='margin-top:0px;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br />");
 					
+					if(!servlets.Utils.isMarketOpen()){
+						out.println("<h2 class='col-sm-12'>Market is currently closed.</h2>");
+					}
 					
-					out.println("<h2 class='col-sm-6' style='margin-top:0px;'> Welcome, " + firstName + " " + LastName + "</h2>");
 				}
 				}catch (ClassNotFoundException e) {
 					
@@ -97,18 +105,19 @@
 			}
 		%>
 
-		<form action="Logout" method="GET">
-			<div class="form-group" id="logout-button">
-				<button type="submit" class="btn btn-default btn-sm">
-					<span class="glyphicon glyphicon-log-out"></span> Log out
+		
+	</div>
+	
+	<div class="container">
+		<form action="AddBankAccount" method="POST">
+			<div class="form-group" id="addBankAccount-button">
+				<button type="submit" class="btn btn-primary">
+					Add Bank Account
 				</button>
 			</div>
 			<!-- form-group// -->
 
 		</form>
-
-
-
 	</div>
 
 
