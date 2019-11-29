@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Welcome!</title>
+	<title>View Profile</title>
 </head>
 
 <body>
@@ -65,68 +65,42 @@
 	</nav>
 
 	<div class="container">
-		
 		<%
 			Cookie ck[] = request.getCookies();
 			if (ck != null) {
 				
-				try {
-				for (int i = 0; i < ck.length; i++) {
-					Cookie cookie = ck[i];
-					System.out.print("CookieName : " + cookie.getName() + ",  ");
-					System.out.println("Value: " + cookie.getValue());
-					String email = cookie.getValue();
-					
-					Connection con = servlets.DBConnection.initializeDatabase();
-					Statement stmt = con.createStatement();
-					String sql = "SELECT First_Name, Last_Name FROM USERS WHERE Email_Address = \'" + email + "\'";
-					ResultSet rs = stmt.executeQuery(sql);
-					rs.next();
-					String firstName = rs.getString("First_Name");
-					String LastName = rs.getString("Last_Name");
-						
-					out.println("<h2 class='col-sm-12' style='margin-top:0px;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br />");
-					
-					if(!servlets.Utils.isMarketOpen()){
-						out.println("<h2 class='col-sm-12'>Market is currently closed.</h2>");
-					}
-					
-				}
-				}catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
 			} else {
-				System.out.println("Not authenticated on member.jsp!");
+				System.out.println("Not authenticated on viewProfile.jsp!");
 				//request.getRequestDispatcher("index.jsp").include(request, response);
 				response.sendRedirect("index.jsp");
 			}
 		%>
-
 		
+		<h1 style="margin-bottom: 25px;" class="text-center">Profile Information</h1>
+
+		<div class="profile-card">
+			<img src="assets/sampleUserImage.png" alt="picture" style="width: 100%">
+			<h1><%=request.getParameter("first_name") %> <%=request.getParameter("last_name") %></h1>
+			<p class="email"><%=request.getParameter("email") %></p>
+			<p><%=request.getParameter("address") %></p>
+			<div style="margin: 24px 0;">
+				<a class="card-social" href="#"><i class="fab fa-dribbble"></i></a> 
+				<a class="card-social" href="#"><i class="fab fa-twitter"></i></a> 
+				<a class="card-social" href="#"><i class="fab fa-linkedin"></i></a>
+				<a class="card-social" href="#"><i class="fab fa-facebook"></i></a>
+			</div>
+			<p>
+				<a href="editProfile.jsp">
+					<button id="card-button">Edit Profile</button>
+				</a>
+			</p>
+		</div>
+
+
+
 	</div>
-
-	<div class="container" style="text-align: center;">
-
-
-		<a href="addBank.jsp">
-			<button type="button" class="btn btn-primary" id="addBankAccount-button">Add Bank
-				Account</button>
-		</a>
-
-
-
-		<form action="http://localhost:8180/webApplication/ViewProfile"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">View
-				Personal Profile</button>
-		</form>
-
-
-	</div>
+	
+	
 
 
 	<div class="jumbotron text-center" style="margin-bottom:0">

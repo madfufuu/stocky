@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Welcome!</title>
+	<title>Edit Profile</title>
 </head>
 
 <body>
@@ -65,68 +65,45 @@
 	</nav>
 
 	<div class="container">
-		
 		<%
 			Cookie ck[] = request.getCookies();
 			if (ck != null) {
 				
-				try {
-				for (int i = 0; i < ck.length; i++) {
-					Cookie cookie = ck[i];
-					System.out.print("CookieName : " + cookie.getName() + ",  ");
-					System.out.println("Value: " + cookie.getValue());
-					String email = cookie.getValue();
-					
-					Connection con = servlets.DBConnection.initializeDatabase();
-					Statement stmt = con.createStatement();
-					String sql = "SELECT First_Name, Last_Name FROM USERS WHERE Email_Address = \'" + email + "\'";
-					ResultSet rs = stmt.executeQuery(sql);
-					rs.next();
-					String firstName = rs.getString("First_Name");
-					String LastName = rs.getString("Last_Name");
-						
-					out.println("<h2 class='col-sm-12' style='margin-top:0px;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br />");
-					
-					if(!servlets.Utils.isMarketOpen()){
-						out.println("<h2 class='col-sm-12'>Market is currently closed.</h2>");
-					}
-					
-				}
-				}catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
 			} else {
 				System.out.println("Not authenticated on member.jsp!");
 				//request.getRequestDispatcher("index.jsp").include(request, response);
 				response.sendRedirect("index.jsp");
 			}
 		%>
+		
+		<h2>Edit Your Profile:</h2>
+		
+		<div class="row justify-content-center">
+			<form action="http://localhost:8180/webApplication/EditProfile" method="post" class="col-sm-6"
+				id="signupForm">
+				<div class="form-group">
+					<label for="inputFirstName">First Name</label> <input
+						type="text" class="form-control" id="inputFirstName" name="inputFirstName"
+						placeholder="Your First Name" required>
+				</div>
+				<div class="form-group">
+					<label for="inputLastName">Last Name</label> <input
+						type="text" class="form-control" id="inputLastName" name="inputLastName"
+						placeholder="Your Last Name" required>
+				</div>
+				<div class="form-group">
+					<label for="inputAddress">Physical Address</label> <input
+						type="text" class="form-control" id="inputAddress" name="inputAddress"
+						placeholder="Your Address" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Save</button>
+			</form>
+		</div>
 
 		
 	</div>
-
-	<div class="container" style="text-align: center;">
-
-
-		<a href="addBank.jsp">
-			<button type="button" class="btn btn-primary" id="addBankAccount-button">Add Bank
-				Account</button>
-		</a>
-
-
-
-		<form action="http://localhost:8180/webApplication/ViewProfile"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">View
-				Personal Profile</button>
-		</form>
-
-
-	</div>
+	
+	
 
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
