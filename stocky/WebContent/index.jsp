@@ -55,7 +55,7 @@
 		</div>
 	</nav>
 
-	<form method="post" action="LoginCheck">
+	<form method="post" action="http://localhost:8180/webApplication/LoginCheck">
 	<div class="container" style="margin-top:30px; margin-bottom:30px">
 		<div class="row">
 			<div class="col-sm-12 d-flex justify-content-center">
@@ -63,17 +63,18 @@
 				
 				<div id="signin-form-card" class="card">
 					<article class="card-body">
+						<a href="member.jsp" class="btn btn-outline-primary">Already Logged in?</a>
 						<a href="signup.jsp" class="float-right btn btn-outline-primary">Sign up</a>
-						<h4 class="card-title mb-4 mt-1">Sign in</h4>
+						<h4 class="card-title mb-4 mt-4">Sign in</h4>
 							
 							<div class="form-group">
 								<label>Email</label>
-								<input name="email" class="form-control" placeholder="Email" type="email">
+								<input name="email" class="form-control" placeholder="Email" type="email" required>
 							</div> <!-- form-group// -->
 							<div class="form-group">
 								<a class="float-right" href="#">Forgot password?</a>
 								<label>Password</label>
-								<input class="form-control" placeholder="******" type="password" name="password">
+								<input class="form-control" placeholder="******" type="password" name="password" required>
 							</div> <!-- form-group// --> 
 							<div class="form-group"> 
 								<div class="checkbox">

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="servlets.DBConnection" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +14,10 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Registration</title>
+	<title>Add another bank</title>
 </head>
 
 <body>
@@ -31,11 +35,11 @@
   		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="member.jsp">Member Home<span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Buy and Sell Stocks</a>
+					<a class="nav-link" href="#">Trade Stocks</a>
 				</li>
 
 				<li class="nav-item">
@@ -52,49 +56,50 @@
 
 			</ul>
 
+			<form class="" action="http://localhost:8180/webApplication/Logout" method="GET">
+				<button type="submit" class="btn btn-default btn-sm" id="logout-button">
+					<span class="glyphicon glyphicon-log-out"></span> Log out
+				</button>
+			</form>
 		</div>
 	</nav>
 
-
 	<div class="container">
+		<%
+			Cookie ck[] = request.getCookies();
+			if (ck != null) {
+				
+			} else {
+				System.out.println("Not authenticated on member.jsp!");
+				//request.getRequestDispatcher("index.jsp").include(request, response);
+				response.sendRedirect("index.jsp");
+			}
+		%>
+		
+		<h2>Add new bank information:</h2>
+		
 		<div class="row justify-content-center">
-			<form action="http://localhost:8180/webApplication/Registration" method="post" class="col-sm-6"
+			<form action="http://localhost:8180/webApplication/AddBankAccount" method="post" class="col-sm-6"
 				id="signupForm">
 				<div class="form-group">
-					<label for="inputEmail">Email address</label> <input
-						type="email" class="form-control" id="inputEmail" name="inputEmail"
-						aria-describedby="emailHelp" placeholder="Enter email" required> <small
-						id="emailHelp" class="form-text text-muted">We'll never
-						share your email with anyone else.</small>
+					<label for="inputBANum">Bank Account Number</label> <input
+						type="text" class="form-control" id="inputBANum" name="inputBANum"
+						placeholder="Your Bank Account Number" required>
 				</div>
 				<div class="form-group">
-					<label for="inputPassword">Password</label> <input
-						type="password" class="form-control" id="inputPassword" name="inputPassword"
-						placeholder="Password" required>
+					<label for="inputBARoutingNum">Routing Number</label> <input
+						type="text" class="form-control" id="inputBARoutingNum" name="inputBARoutingNum"
+						placeholder="Your Routing Number" required>
 				</div>
-				<div class="form-group">
-					<label for="inputFirstName">First Name</label> <input
-						type="text" class="form-control" id="inputFirstName" name="inputFirstName"
-						placeholder="Your First Name" required>
-				</div>
-				<div class="form-group">
-					<label for="inputLastName">Last Name</label> <input
-						type="text" class="form-control" id="inputLastName" name="inputLastName"
-						placeholder="Your Last Name" required>
-				</div>
-				<div class="form-group">
-					<label for="inputAddress">Physical Address</label> <input
-						type="text" class="form-control" id="inputAddress" name="inputAddress"
-						placeholder="Your Address" required>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input" id="exampleCheck1">
-					<label class="form-check-label" for="exampleCheck1">Placeholder</label>
-				</div>
-				<button type="submit" class="btn btn-primary">Register!</button>
+				<button type="submit" class="btn btn-primary">Add This Bank</button>
 			</form>
 		</div>
+
+		
 	</div>
+	
+	
+
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<p>© Copyright 2019 Stocky • All rights reserved.</p>

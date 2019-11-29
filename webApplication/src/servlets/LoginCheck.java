@@ -70,14 +70,15 @@ public class LoginCheck extends HttpServlet {
 				//String userFirstName = rs1.getString("First_Name");
 				
 				Cookie ck = new Cookie("email", dbEmailAddress);  
-				ck.setMaxAge(60 * 60); 
+				ck.setMaxAge(60 * 60);
+				ck.setPath("/");
 	            response.addCookie(ck);  
 				//response.sendRedirect("member.jsp");
 				request.setAttribute("email", dbEmailAddress);
 				//request.getRequestDispatcher("member.jsp").forward(request, response);
-				response.sendRedirect("member.jsp");
+				response.sendRedirect("http://localhost:8080/stocky/member.jsp");
 			}else {
-				response.sendRedirect("error.jsp");
+				response.sendRedirect("http://localhost:8080/stocky/error.jsp");
 			}
 			
 			rs.close();

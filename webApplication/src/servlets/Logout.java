@@ -39,12 +39,15 @@ public class Logout extends HttpServlet {
               
               if((cookie.getName()).compareTo("email") == 0 ) {
                  cookie.setMaxAge(0);
+                 cookie.setPath("/");
                  response.addCookie(cookie);
                  System.out.println("Deleted cookie: " + cookie.getName());
-                 response.sendRedirect("index.jsp");
+                 
+                 
               }
           
            }
+           response.sendRedirect("http://localhost:8080/stocky/index.jsp");
         } else {
            System.out.println("No cookies founds");
         }

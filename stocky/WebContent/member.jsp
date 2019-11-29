@@ -56,7 +56,7 @@
 
 			</ul>
 
-			<form class="" action="Logout" method="GET">
+			<form class="" action="http://localhost:8180/webApplication/Logout" method="GET">
 				<button type="submit" class="btn btn-default btn-sm" id="logout-button">
 					<span class="glyphicon glyphicon-log-out"></span> Log out
 				</button>
@@ -65,6 +65,7 @@
 	</nav>
 
 	<div class="container">
+		
 		<%
 			Cookie ck[] = request.getCookies();
 			if (ck != null) {
@@ -109,15 +110,19 @@
 	</div>
 	
 	<div class="container">
-		<form action="AddBankAccount" method="POST">
+		<!-- <form action="http://localhost:8180/webApplication/AddBankAccount" method="POST">
 			<div class="form-group" id="addBankAccount-button">
 				<button type="submit" class="btn btn-primary">
 					Add Bank Account
 				</button>
 			</div>
-			<!-- form-group// -->
+			form-group//
 
-		</form>
+		</form> -->
+
+		<a href="addBank.jsp" id="addBankAccount-button">
+			<button type="button" class="btn btn-primary">Add Bank Account</button>
+		</a>
 	</div>
 
 
