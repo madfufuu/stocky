@@ -48,13 +48,14 @@ public class Registration extends HttpServlet {
 		try {
 			Connection con = DBConnection.initializeDatabase();
 			
-			PreparedStatement st = con.prepareStatement("insert into USERS values(?, ?, ?, ?, ?)"); 
+			PreparedStatement st = con.prepareStatement("insert into USERS values(?, ?, ?, ?, ?, ?)"); 
 			st.setString(1, userEmail);
 			st.setString(2, userFirstName);
 			st.setString(3, userLastName);
 //			st.setInt(4, Integer.valueOf(userBankAccountNum));
 			st.setString(4, userPassword);
 			st.setString(5, userAddress);
+			st.setString(6, Double.toString(0));
 			
 			st.executeUpdate();
 			

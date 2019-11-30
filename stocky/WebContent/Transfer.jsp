@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
 <%@ page import="servlets.DBConnection" %>
 
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Welcome!</title>
+	<title>Transfer Service</title>
 </head>
 
 <body>
@@ -65,76 +66,54 @@
 	</nav>
 
 	<div class="container">
-		
 		<%
 			Cookie ck[] = request.getCookies();
 			if (ck != null) {
 				
-				try {
-				for (int i = 0; i < ck.length; i++) {
-					Cookie cookie = ck[i];
-					System.out.print("CookieName : " + cookie.getName() + ",  ");
-					System.out.println("Value: " + cookie.getValue());
-					String email = cookie.getValue();
-					
-					Connection con = servlets.DBConnection.initializeDatabase();
-					Statement stmt = con.createStatement();
-					String sql = "SELECT First_Name, Last_Name, Wallet_Balance FROM USERS WHERE Email_Address = \'" + email + "\'";
-					ResultSet rs = stmt.executeQuery(sql);
-					rs.next();
-					String firstName = rs.getString("First_Name");
-					String LastName = rs.getString("Last_Name");
-					String balance = rs.getString("Wallet_Balance");
-						
-					out.println("<h2 class='col-sm-12' style='margin-top:0px;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br />");
-					out.println("<h2 class='col-sm-12'>" + "Balance: $" + balance + "</h2><br />");
-					
-					if(!servlets.Utils.isMarketOpen()){
-						out.println("<h2 class='col-sm-12'>Market is currently closed.</h2>");
-					}
-					
-					
-				}
-				}catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
 			} else {
 				System.out.println("Not authenticated on member.jsp!");
 				//request.getRequestDispatcher("index.jsp").include(request, response);
 				response.sendRedirect("index.jsp");
 			}
 		%>
-
 		
+		<h2>Transfer:</h2>
+		<h3 class="text-center">Available Bank Accounts:</h3>
+
+		<div class="row justify-content-center">
+
+			<form
+				action="http://localhost:8180/webApplication/TransferServiceAction"
+				method="post" class="col-sm-6" id="signupForm">
+				<div class="form-group">
+					<%
+						String bankAccounts = request.getParameter("bankAccounts");
+						List<String> bankAccountsList = Arrays.asList(bankAccounts.split(","));
+
+						for (String bankAccount : bankAccountsList) {
+							//out.println("<h3 class='col-sm-12 text-center'>" + bankAccount + "</h3><br />");
+							out.println("<input type='radio' id='bankAccount' name='bankAccount' value=" + bankAccount + "> "
+									+ bankAccount + "<br>");
+						}
+					%>
+
+					<div class="form-group">
+						<label for="inputTransferAmount">Transfer Amount</label> <input
+							type="text" class="form-control" id="inputTransferAmount"
+							name="inputTransferAmount" placeholder="Transfer Amount" required>
+					</div>
+				</div>
+				<button type="submit" name="to" class="btn btn-primary">Transfer
+					To</button>
+				<button type="submit" name="from" class="btn btn-primary">Transfer
+					From</button>
+			</form>
+		</div>
+
+
 	</div>
-
-	<div class="container" style="text-align: center;">
-
-
-		<a href="addBank.jsp">
-			<button type="button" class="btn btn-primary" id="addBankAccount-button">Add Bank
-				Account</button>
-		</a>
-
-
-
-		<form action="http://localhost:8180/webApplication/ViewProfile"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">View
-				Personal Profile</button>
-		</form>
-		
-		<form action="http://localhost:8180/webApplication/TransferService"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">Transfer Money</button>
-		</form>
-
-
-	</div>
+	
+	
 
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
