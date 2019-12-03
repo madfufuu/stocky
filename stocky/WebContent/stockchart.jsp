@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="servlets.DBConnection" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script src="plotly.min.js"></script>
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Welcome!</title>
+	<title>Stocky</title>
 </head>
 
 <body>
@@ -35,7 +33,7 @@
   		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="member.jsp">Member Home<span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="index.jsp">Home<span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item">
@@ -56,87 +54,43 @@
 
 			</ul>
 
-			<form class="" action="http://localhost:8180/webApplication/Logout" method="GET">
-				<button type="submit" class="btn btn-default btn-sm" id="logout-button">
-					<span class="glyphicon glyphicon-log-out"></span> Log out
-				</button>
-			</form>
 		</div>
 	</nav>
 
-	<div class="container">
-		
-		<%
-			Cookie ck[] = request.getCookies();
-			if (ck != null) {
-				
-				try {
-				for (int i = 0; i < ck.length; i++) {
-					Cookie cookie = ck[i];
-					System.out.print("CookieName : " + cookie.getName() + ",  ");
-					System.out.println("Value: " + cookie.getValue());
-					String email = cookie.getValue();
-					
-					Connection con = servlets.DBConnection.initializeDatabase();
-					Statement stmt = con.createStatement();
-					String sql = "SELECT First_Name, Last_Name, Wallet_Balance FROM USERS WHERE Email_Address = \'" + email + "\'";
-					ResultSet rs = stmt.executeQuery(sql);
-					rs.next();
-					String firstName = rs.getString("First_Name");
-					String LastName = rs.getString("Last_Name");
-					String balance = rs.getString("Wallet_Balance");
-						
-					out.println("<h2 class='col-sm-12' style='margin-top:0px;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br />");
-					out.println("<h2 class='col-sm-12'>" + "Balance: $" + balance + "</h2><br />");
-					
-					if(!servlets.Utils.isMarketOpen()){
-						out.println("<h2 class='col-sm-12'>Market is currently closed.</h2>");
-					}
-					
-					
-				}
-				}catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
-			} else {
-				System.out.println("Not authenticated on member.jsp!");
-				//request.getRequestDispatcher("index.jsp").include(request, response);
-				response.sendRedirect("index.jsp");
-			}
-		%>
+    <div class="navbar"><span>Real-Time Stock Flow Chart</span></div>
+    <a href="member.jsp">
+			<button type="button" class="btn btn-primary" id="addBankAccount-button">Back To Member Home</button>
+	</a>
+    <div class="wrapper">
+		<div id="chart"></div>
+		<div id="chart2"></div>
+        <script>
+            function getData() {
+                return Math.random();
+            }  
+            Plotly.plot('chart',[{
+                y:[getData()],
+                type:'line'
+            }]);
+            Plotly.plot('chart2',[{
+                y:[getData()],
+                type:'line'
+            }]);
+            var cnt = 0;
+            setInterval(function(){
+                Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
+                cnt++;
+                if(cnt > 500) {
+                    Plotly.relayout('chart',{
+                        xaxis: {
+                            range: [cnt-500,cnt]
+                        }
+                    });
+                }
+            },15);
+        </script>
 
-		
-	</div>
-
-	<div class="container" style="text-align: center;">
-
-
-		<a href="addBank.jsp">
-			<button type="button" class="btn btn-primary" id="addBankAccount-button">Add Bank
-				Account</button>
-		</a>
-
-		<a href="stockchart.jsp">
-			<button type="button" class="btn btn-primary" id="addBankAccount-button">View Current Stock</button>
-		</a>
-
-		<form action="http://localhost:8180/webApplication/ViewProfile"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">View
-				Personal Profile</button>
-		</form>
-		
-		<form action="http://localhost:8180/webApplication/TransferService"
-			method="post">
-			<button type="submit" class="btn btn-primary" id="viewProfile-button">Transfer Money</button>
-		</form>
-
-
-	</div>
+    </div>
 
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
