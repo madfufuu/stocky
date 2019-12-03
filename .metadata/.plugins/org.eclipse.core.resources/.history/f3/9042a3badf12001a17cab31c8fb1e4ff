@@ -1,0 +1,109 @@
+package servlets;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class AddBankAccount
+ */
+@WebServlet("/AddBankAccount")
+public class AddBankAccount extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AddBankAccount() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Cookie ck[] = request.getCookies();
+		String email = "";
+		if (ck != null) {
+
+			try {
+				for (int i = 0; i < ck.length; i++) {
+					Cookie cookie = ck[i];
+					System.out.print("CookieName : " + cookie.getName() + ",  ");
+					System.out.println("Value: " + cookie.getValue());
+					email = cookie.getValue();
+					break;
+				}
+			}catch (ClassNotFoundException e) {
+
+				e.printStackTrace();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Not authenticated on member.jsp!");
+			//request.getRequestDispatcher("index.jsp").include(request, response);
+			response.sendRedirect("index.jsp");
+		}
+		
+		
+		String userEmail = request.getParameter("inputEmail");
+		String userFirstName = request.getParameter("inputFirstName");
+		String userLastName = request.getParameter("inputLastName");
+		String userBankAccountNum = request.getParameter("inputBankAccountNum");
+		String userPassword = request.getParameter("inputPassword");
+		String userAddress = request.getParameter("inputAddress");
+		
+		try {
+			Connection con = DBConnection.initializeDatabase();
+			
+			PreparedStatement st = con.prepareStatement("insert into USERS values(?, ?, ?, ?, ?)"); 
+			st.setString(1, userEmail);
+			st.setString(2, userFirstName);
+			st.setString(3, userLastName);
+//			st.setInt(4, Integer.valueOf(userBankAccountNum));
+			st.setString(4, userPassword);
+			st.setString(5, userAddress);
+			
+			st.executeUpdate();
+			
+			Cookie ck = new Cookie("email", userEmail);  
+			ck.setMaxAge(60 * 60); 
+			ck.setPath("/");
+            response.addCookie(ck);  
+			request.setAttribute("email", userEmail);
+			
+			//request.setAttribute("firstName", userFirstName);
+			//request.getRequestDispatcher("http://localhost:8080/stocky/member.jsp").forward(request, response);
+			response.sendRedirect("http://localhost:8080/stocky/member.jsp");
+			
+			st.close(); 
+            con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+}

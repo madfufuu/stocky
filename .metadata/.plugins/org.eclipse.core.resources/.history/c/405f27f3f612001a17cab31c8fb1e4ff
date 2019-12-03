@@ -1,0 +1,76 @@
+@charset "UTF-8";
+#signin-form-card {
+	width: 50%;
+}
+
+#signupForm{
+	text-align: center;
+	margin-top:  30px;
+	margin-bottom:  30px;
+}
+
+#jumbotron-top {
+  background-image: url("assets/jumbotron_bottom.jpg");
+  background-size: cover;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fab {
+	padding: 10px;
+}
+
+#logout-button {
+	float: right;
+	margin-top: 10px;
+}
+
+#addBankAccount-button {
+	padding: 15px;
+}
+
+#viewProfile-button {
+	padding: 15px;
+}
+
+#editProfile-button {
+	padding: 15px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+.card button:hover, a:hover {
+  opacity: 0.7;
+}
+
+.email {
+  color: grey;
+  font-size: 18px;
+}
