@@ -3,7 +3,6 @@
 <%@ page session="false" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="servlets.DBConnection" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +13,18 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>404 Error</title>
+	<title>Stocky</title>	
 </head>
+
 <body>
 	<div class="jumbotron text-center" style="margin-bottom:0" id="jumbotron-top">
   		<h1 class="text-light">Welcome to Stocky,</h1>
  		<p class="text-light">A place to start your stock exchange.</p> 
 	</div>
-	
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
   		<a class="navbar-brand" href="index.jsp">Stocky</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
@@ -57,11 +56,52 @@
 
 		</div>
 	</nav>
-	
-	<h1><center>Error 404</center></h1></br>
 
-	<center><font size="6">User entered something wrong. Destination is not available</font></center>
-	</br></br></br></br></br>
+
+		<div class="container">
+		<%
+			Cookie ck[] = request.getCookies();
+			if (ck != null) {
+				
+				try {
+				for (int i = 0; i < ck.length; i++) {
+					Cookie cookie = ck[i];
+					System.out.print("CookieName : " + cookie.getName() + ",  ");
+					System.out.println("Value: " + cookie.getValue());
+					String email = cookie.getValue();
+					
+					Connection con = servlets.DBConnection.initializeDatabase();
+					Statement stmt = con.createStatement();
+					String sql = "SELECT First_Name, Last_Name, Password FROM USERS WHERE Email_Address = \'" + email + "\'";
+					ResultSet rs = stmt.executeQuery(sql);
+					rs.next();
+					String firstName = rs.getString("First_Name");
+					String LastName = rs.getString("Last_Name");
+					String Password = rs.getString("Password");
+						
+					out.println("<h2 class='col-sm-12' style='margin-top:0px;text-align: center;'>" + servlets.Utils.getGreetings() + ", " + firstName + " " + LastName + "</h2><br/></br>");
+					out.println("<h5 class='col-sm-12' style='margin-top:0px;color:red;text-align: center;'>Your password is: " + Password + "</h5></br></br>");
+					if(!servlets.Utils.isMarketOpen()){
+						out.println("<h2 class='col-sm-12' style='text-align: center;'><font size='4'>Market is currently closed.</font></h2>");
+					}
+					
+				}
+				}catch (ClassNotFoundException e) {
+					
+					e.printStackTrace();
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("Not authenticated on member.jsp!");
+				//request.getRequestDispatcher("index.jsp").include(request, response);
+				response.sendRedirect("index.jsp");
+			}
+		%>
+	</div>
+
+
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<p>© Copyright 2019 Stocky • All rights reserved.</p>
 		<div>

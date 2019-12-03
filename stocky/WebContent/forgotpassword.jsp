@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="servlets.DBConnection" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +11,18 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>404 Error</title>
+	<title>Stocky</title>	
 </head>
+
 <body>
 	<div class="jumbotron text-center" style="margin-bottom:0" id="jumbotron-top">
   		<h1 class="text-light">Welcome to Stocky,</h1>
  		<p class="text-light">A place to start your stock exchange.</p> 
 	</div>
-	
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
   		<a class="navbar-brand" href="index.jsp">Stocky</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
@@ -57,11 +54,38 @@
 
 		</div>
 	</nav>
+<h4 style ="text-align:center;"><font size="4">Fill out personal info to check your password</font></h4>
+	<div class="container">
+		<div class="row justify-content-center">
+			<form action="http://localhost:8180/webApplication/CheckPassword" method="post" class="col-sm-6"
+				id="signupForm">
+				<div class="form-group">
+					<label for="inputEmail">Email address</label> <input
+						type="email" class="form-control" id="inputEmail" name="inputEmail"
+						aria-describedby="emailHelp" placeholder="Enter email"> 
+				</div>
+				<div class="form-group">
+					<label for="inputFirstName">First Name</label> <input
+						type="text" class="form-control" id="inputFirstName" name="inputFirstName"
+						placeholder="Your First Name">
+				</div>
+				<div class="form-group">
+					<label for="inputLastName">Last Name</label> <input
+						type="text" class="form-control" id="inputLastName" name="inputLastName"
+						placeholder="Your Last Name">
+				</div>
+				<div class="form-group">
+					<label for="inputAddress">Physical Address</label> <input
+						type="text" class="form-control" id="inputAddress" name="inputAddress"
+						placeholder="Your Address">
+				</div>
+				</br></br>
+				<button type="submit" class="btn btn-primary">Check My Password</button>
+			</form>
+		</div>
+	</div>
 	
-	<h1><center>Error 404</center></h1></br>
-
-	<center><font size="6">User entered something wrong. Destination is not available</font></center>
-	</br></br></br></br></br>
+	
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<p>© Copyright 2019 Stocky • All rights reserved.</p>
 		<div>
@@ -71,7 +95,6 @@
 				class="fab fa-youtube"></a> <a href="#" class="fab fa-instagram"></a>
 		</div>
 	</div>
-	
 
 
 	<!-- Optional JavaScript -->

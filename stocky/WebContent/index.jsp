@@ -72,7 +72,7 @@
 								<input name="email" class="form-control" placeholder="Email" type="email" required>
 							</div> <!-- form-group// -->
 							<div class="form-group">
-								<a class="float-right" href="#">Forgot password?</a>
+								<a class="float-right" href="forgotpassword.jsp">Forgot password?</a>
 								<label>Password</label>
 								<input class="form-control" placeholder="******" type="password" name="password" required>
 							</div> <!-- form-group// --> 
