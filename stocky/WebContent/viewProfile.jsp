@@ -3,7 +3,9 @@
 <%@ page session="false" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="servlets.DBConnection" %>
-
+<%@ page import="java.net.InetSocketAddress" %> 
+<%@ page import="java.util.Date" %>
+<%@ page import="net.spy.memcached.MemcachedClient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +79,13 @@
 		%>
 		
 		<h1 style="margin-bottom: 25px;" class="text-center">Profile Information</h1>
+<%
+MemcachedClient memcacheClient = new MemcachedClient(new InetSocketAddress("localhost", 11211));  
 
+String status=(String)memcacheClient.get("status");
+out.println("<h3 class='col-sm-12' style='text-align: center;'><font size='4'>"+ status +"</font></h3>");
+System.out.println("Get from cache"+status);
+%>
 		<div class="profile-card">
 			<img src="assets/sampleUserImage.png" alt="picture" style="width: 100%">
 			<h1><%=request.getParameter("first_name") %> <%=request.getParameter("last_name") %></h1>

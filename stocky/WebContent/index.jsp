@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%@ page import="java.net.InetSocketAddress" %> 
+<%@ page import="java.util.Date" %>
+<%@ page import="net.spy.memcached.MemcachedClient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +57,12 @@
 
 		</div>
 	</nav>
-
+<%
+MemcachedClient memcacheClient = new MemcachedClient(new InetSocketAddress("localhost", 11211));  
+String status = "Have not edited profile recently.";  
+memcacheClient.set("status", 3600, status); 
+System.out.println("string sent to memcache server.");
+%>
 	<form method="post" action="http://localhost:8180/webApplication/LoginCheck">
 	<div class="container" style="margin-top:30px; margin-bottom:30px">
 		<div class="row">

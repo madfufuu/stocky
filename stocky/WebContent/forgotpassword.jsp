@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%@ page import="java.net.InetSocketAddress" %> 
+<%@ page import="java.util.Date" %>
+<%@ page import="net.spy.memcached.MemcachedClient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +88,14 @@
 		</div>
 	</div>
 	
-	
+	<%
+
+	MemcachedClient memcacheClient = new MemcachedClient(new InetSocketAddress("localhost", 11211));  
+          
+        Date startDate = new Date();  
+        memcacheClient.set("keyDate", 3600, startDate); 
+System.out.println("Password Request Process start date sent to memcached server.");
+	 %>
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<p>© Copyright 2019 Stocky • All rights reserved.</p>
 		<div>

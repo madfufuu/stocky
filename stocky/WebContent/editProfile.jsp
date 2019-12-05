@@ -3,7 +3,9 @@
 <%@ page session="false" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="servlets.DBConnection" %>
-
+<%@ page import="java.net.InetSocketAddress" %> 
+<%@ page import="java.util.Date" %>
+<%@ page import="net.spy.memcached.MemcachedClient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +98,13 @@
 						type="text" class="form-control" id="inputAddress" name="inputAddress"
 						placeholder="Your Address" required>
 				</div>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="submit" class="btn btn-primary">Save<%
+						MemcachedClient memcacheClient = new MemcachedClient(new InetSocketAddress("localhost", 11211));  
+					          
+					        String status = "Edited profile recently.";
+							memcacheClient.replace("status", 3600, status);
+					        System.out.println("Cache string replaced to:"+ status);
+				%></button>
 			</form>
 		</div>
 

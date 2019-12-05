@@ -3,6 +3,9 @@
 <%@ page session="false" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="servlets.DBConnection" %>
+<%@ page import="java.net.InetSocketAddress" %> 
+<%@ page import="java.util.Date" %>
+<%@ page import="net.spy.memcached.MemcachedClient" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,7 +103,13 @@
 			}
 		%>
 	</div>
-
+	<%
+	MemcachedClient memcacheClient = new MemcachedClient(new InetSocketAddress("localhost", 11211));  
+          
+        Date fetchedDate = (Date)memcacheClient.get("keyDate");
+        out.println("<h3 class='col-sm-12' style='text-align: center;'><font size='4'>Start Date Of Password Retrieval:"+ fetchedDate +"</font></h3>");
+        System.out.println("<h3 class='col-sm-12' style='text-align: center;'><font size='4'>Start Date Of Password Retrieval:"+ fetchedDate +"</font></h3>");
+	 %>
 
 	<div class="jumbotron text-center" style="margin-bottom:0">
 		<p>© Copyright 2019 Stocky • All rights reserved.</p>
