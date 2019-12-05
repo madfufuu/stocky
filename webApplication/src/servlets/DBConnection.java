@@ -17,7 +17,7 @@ public class DBConnection {
 		// Database name to access 
 		String dbName = "stocky"; 
 		String dbUsername = "root"; 
-		String dbPassword = "WPL2019FALL"; 
+		String dbPassword = "SoS00zxc"; 
 
 		Class.forName(dbDriver); 
 		Connection con = DriverManager.getConnection(dbURL + dbName, 

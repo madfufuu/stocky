@@ -39,21 +39,16 @@
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Trade Stocks</a>
+					<a class="nav-link" href="stockMarket.jsp">View Stock Market</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
+					<a class="nav-link" href="tradeStocks.jsp">Trade Stocks</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
+					<a class="nav-link" href="#">My Stocks</a>
 				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
-				</li>
-
 			</ul>
 
 			<form class="" action="http://localhost:8180/webApplication/Logout" method="GET">

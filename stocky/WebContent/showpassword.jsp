@@ -36,22 +36,6 @@
 					<a class="nav-link" href="index.jsp">Home<span class="sr-only">(current)</span></a>
 				</li>
 
-				<li class="nav-item">
-					<a class="nav-link" href="#">Trade Stocks</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">123</a>
-				</li>
-
 			</ul>
 
 		</div>
