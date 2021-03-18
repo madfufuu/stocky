@@ -1,0 +1,3 @@
+INDEX VERSION 1.131
+/Users/Tim/Documents/web-project/stocky1/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/537532462.index
+/stocky/src

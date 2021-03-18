@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+/Users/Tim/Documents/web-project/stocky1/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2742634163.index
+33847952.index
+3105596163.index
+449421121.index
+1345180354.index
+2169922596.index
+1220599295.index
+537532462.index

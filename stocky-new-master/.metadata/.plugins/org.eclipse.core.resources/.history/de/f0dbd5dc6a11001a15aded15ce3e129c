@@ -1,0 +1,15 @@
+@charset "UTF-8";
+#signin-form-card {
+	width: 50%;
+}
+
+#signupForm{
+	text-align: center;
+	margin-top:  30px;
+	margin-bottom:  30px;
+}
+
+.jumbotron, .text-center {
+  background-image: url("assets/jumbotron_bottom.jpg");
+  background-size: cover;
+}

@@ -1,0 +1,7 @@
+127.0.0.1 - - [02/Dec/2019:20:38:31 -0600] "GET / HTTP/1.1" 404 709
+0:0:0:0:0:0:0:1 - - [02/Dec/2019:21:52:12 -0600] "POST /webApplication/LoginCheck HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [02/Dec/2019:21:52:18 -0600] "GET /webApplication/Logout? HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [02/Dec/2019:21:56:43 -0600] "POST /webApplication/LoginCheck HTTP/1.1" 302 -
+127.0.0.1 - - [02/Dec/2019:22:00:15 -0600] "GET / HTTP/1.1" 404 709
+127.0.0.1 - - [02/Dec/2019:22:01:37 -0600] "GET / HTTP/1.1" 404 709
+0:0:0:0:0:0:0:1 - - [02/Dec/2019:22:02:00 -0600] "POST /webApplication/ViewProfile HTTP/1.1" 302 -
