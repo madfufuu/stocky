@@ -1,3 +1,6 @@
+#Stocky - Virtual Stock Market
+A real-time stock brokerage and exchange site
+
 WPL Final Project README
 CS 6314.502
 Professor Balakrishna
