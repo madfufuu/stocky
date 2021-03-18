@@ -1,11 +1,11 @@
-#Stocky - Virtual Stock Market#
-A real-time stock brokerage and exchange site
+# Stocky - A real-time stock brokerage and exchange site
+Virtual Stock Market
 
-WPL Final Project README
-CS 6314.502
-Professor Balakrishna
-Team: Elkmé
-Zongzhe Li, Yuncheng Gao, Tianhang Zhu
+WPL Final Project README\
+CS 6314.502\
+Professor Balakrishna\
+Team: Elkmé\
+Zongzhe Li, Yuncheng Gao, Tianhang Zhu\
 December 6th, 2019
 
 Our project was developed under MacOS using Eclipse 64 bit for Java EE, which contains Tomcat v9.0.29. We also used MySQL community server as the backend database. To replicate the same environment on other Operating Systems, users might need the corresponding commands for the tools installation. The following instructions were tested only on the MacOS.
