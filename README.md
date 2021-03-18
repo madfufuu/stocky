@@ -1,4 +1,4 @@
-#Stocky - Virtual Stock Market
+#Stocky - Virtual Stock Market#
 A real-time stock brokerage and exchange site
 
 WPL Final Project README
